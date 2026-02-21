@@ -21,6 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        "email_verified_at",
+        "role",
+        "otp_hash",
+        "otp_expires_at",
+
     ];
 
     /**
@@ -44,5 +49,29 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function customerProfile()
+    {
+        return $this->hasOne(CustomerProfile::class);
+    }
+
+    public function providerProfile()
+    {
+        return $this->hasOne(ProviderProfile::class);
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'provider_id');
+    }
+
+    public function customerBookings()
+    {
+        return $this->hasMany(Booking::class, 'customer_id');
+    }
+
+    public function providerBookings()
+    {
+        return $this->hasMany(Booking::class, 'provider_id');
     }
 }
