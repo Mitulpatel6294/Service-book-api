@@ -50,3 +50,14 @@ GET /customer-profile
 POST /provider-profile  
 PATCH /provider-profile  
 GET /provider-profile
+
+### Service 
+POST /provider/services  
+PATCH /provider/services/{id} 
+GET /provider/services
+DELETE /provider/services/{id}
+
+### Admin
+
+### Provider Approve
+POST /admin/provider/{id}/approve
