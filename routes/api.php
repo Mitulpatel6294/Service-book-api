@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AdminProviderController;
+use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CustomerProfileController;
 use App\Http\Controllers\Api\ProviderProfileController;
 use App\Http\Controllers\Api\ServiceController;
@@ -8,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PasswordController;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -25,6 +27,7 @@ Route::middleware(['auth:sanctum', 'role:provider'])
         Route::post('/', [ProviderProfileController::class, 'store']);
         Route::patch('/', [ProviderProfileController::class, 'update']);
         Route::get('/', [ProviderProfileController::class, 'show']);
+
     });
 Route::middleware(['auth:sanctum', 'role:provider', 'verified.provider'])
     ->prefix('provider/services')
@@ -33,6 +36,7 @@ Route::middleware(['auth:sanctum', 'role:provider', 'verified.provider'])
         Route::patch('/{id}', [ServiceController::class, 'update']);
         Route::delete('/{id}', [ServiceController::class, 'destroy']);
         Route::get('/', [ServiceController::class, 'my']);
+        Route::patch('/bookings/{id}/quote', [BookingController::class, 'quote']);
     });
 
 Route::middleware(['auth:sanctum', 'role:customer'])
@@ -41,11 +45,14 @@ Route::middleware(['auth:sanctum', 'role:customer'])
         Route::post('/', [CustomerProfileController::class, 'store']);
         Route::patch('/', [CustomerProfileController::class, 'update']);
         Route::get('/', [CustomerProfileController::class, 'show']);
+        Route::post('/bookings', [BookingController::class, 'store']);
+        Route::patch('/bookings/{id}/accept', [BookingController::class, 'accept']);
+        Route::patch('/bookings/{id}/reject', [BookingController::class, 'reject']);
+        Route::patch('/bookings/{id}/paid',[BookingController::class,'paid']);
     });
 
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::patch('/admin/provider/{id}/approve', [AdminProviderController::class, 'approve']);
 });
-
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);

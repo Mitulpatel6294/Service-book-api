@@ -44,12 +44,22 @@ POST /api/logout (protected)
 ### Customer
 POST /customer-profile  
 PATCH /customer-profile  
-GET /customer-profile  
+GET /customer-profile 
+
+### Bookings Endpoints for Customer
+POST /customer-profile/bookings
+PATCH /customer-profile/bookings/{id}/accept
+PATCH /customer-profile/bookings/{id}/reject
+PATCH /customer-profile/bookings/{id}/paid
 
 ### Provider
 POST /provider-profile  
 PATCH /provider-profile  
 GET /provider-profile
+
+### Bookings Endpoints for Provider
+
+PATCH /provider-profile/bookings/{id}/quote
 
 ### Service 
 POST /provider/services  

@@ -10,7 +10,6 @@ class AdminProviderController extends Controller
 {
     public function approve($id)
     {
-        // dd($id);
         $profile = ProviderProfile::findOrFail($id);
         $profile->update(['is_verified' => true]);
 

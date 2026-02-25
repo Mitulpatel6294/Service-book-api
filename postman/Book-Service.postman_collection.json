@@ -757,6 +757,207 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "book service",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "13|JQCXdZ0xJI5wu70xo9XpRB4nv2fIqoeZlIxmNjp3baa1d0e9",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"service_id\": 1,\r\n  \"booking_date\": \"2026-02-25\",\r\n  \"booking_time\": \"14:30\",\r\n  \"notes\": \"AC not cooling\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/customer-profile/bookings",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "customer-profile",
+            "bookings"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "quote send",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "13|JQCXdZ0xJI5wu70xo9XpRB4nv2fIqoeZlIxmNjp3baa1d0e9",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"service_id\": 1,\r\n  \"booking_date\": \"2026-02-25\",\r\n  \"booking_time\": \"14:30\",\r\n  \"notes\": \"AC not cooling\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/customer-profile/bookings",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "customer-profile",
+            "bookings"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "accept quotation",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "13|JQCXdZ0xJI5wu70xo9XpRB4nv2fIqoeZlIxmNjp3baa1d0e9",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000//api/customer-profile/bookings/6/accept",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "",
+            "api",
+            "customer-profile",
+            "bookings",
+            "6",
+            "accept"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "booking confirm",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "15|B16ufQ3Qtt2gl34nzSReUe5EtxJV77rg5KlS4Wia836d313f",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/customer-profile/bookings/6/paid",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "customer-profile",
+            "bookings",
+            "6",
+            "paid"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

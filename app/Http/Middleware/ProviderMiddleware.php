@@ -15,7 +15,6 @@ class ProviderMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-         dd($request->user());
         $provider = $request->user()->providerProfile;
        
         if (!$provider || !$provider->is_verified) {
