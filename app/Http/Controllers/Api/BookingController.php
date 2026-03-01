@@ -39,9 +39,4 @@ class BookingController extends Controller
     {
         return response()->json($service->rejectQuote($id, auth()->id()));
     }
-
-    public function paid($id, BookingServices $service)
-    {
-        return response()->json($service->markPaid($id));
-    }
 }

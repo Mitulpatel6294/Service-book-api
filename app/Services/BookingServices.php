@@ -92,23 +92,8 @@ class BookingServices
             'quote_status' => 'rejected',
             'status' => 'cancelled'
         ]);
-        dd($booking->provider->email);
-
         Mail::to($booking->provider->email)->send(new BookingCancelledMail($booking));
         return $booking;
     }
 
-    public function markPaid($bookingId)
-    {
-        $booking = Booking::findOrFail($bookingId);
-
-        $booking->update([
-            'payment_status' => 'paid',
-            'status' => 'confirmed'
-        ]);
-        Mail::to($booking->customer->email)->send(new BookingConfirmedMail($booking));
-
-        Mail::to($booking->provider->email)->send(new BookingConfirmedMail($booking));
-        return $booking;
-    }
 }

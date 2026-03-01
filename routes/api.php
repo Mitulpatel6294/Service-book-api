@@ -3,17 +3,23 @@
 use App\Http\Controllers\Api\AdminProviderController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CustomerProfileController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProviderProfileController;
 use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\StripeWebhookController;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PasswordController;
 
 
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle']);
 
 Route::get('/services', [ServiceController::class, 'index']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -48,11 +54,14 @@ Route::middleware(['auth:sanctum', 'role:customer'])
         Route::post('/bookings', [BookingController::class, 'store']);
         Route::patch('/bookings/{id}/accept', [BookingController::class, 'accept']);
         Route::patch('/bookings/{id}/reject', [BookingController::class, 'reject']);
-        Route::patch('/bookings/{id}/paid',[BookingController::class,'paid']);
+        Route::get('/bookings/{id}/pay', [PaymentController::class, 'checkout']);
     });
 
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::patch('/admin/provider/{id}/approve', [AdminProviderController::class, 'approve']);
 });
-Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+

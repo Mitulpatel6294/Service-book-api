@@ -29,7 +29,7 @@ class BookingConfirmedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Booking confirmed after payment',
+            subject: 'Booking confirmed with payment',
         );
     }
 

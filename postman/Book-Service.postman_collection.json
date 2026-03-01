@@ -357,7 +357,7 @@
       "response": []
     },
     {
-      "name": "customer-profile-update",
+      "name": "Provider-profile-update",
       "request": {
         "auth": {
           "type": "bearer",
@@ -909,19 +909,22 @@
       "response": []
     },
     {
-      "name": "booking confirm",
+      "name": "booking confirm with payment",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
       "request": {
         "auth": {
           "type": "bearer",
           "bearer": [
             {
               "key": "token",
-              "value": "15|B16ufQ3Qtt2gl34nzSReUe5EtxJV77rg5KlS4Wia836d313f",
+              "value": "18|eqDgJL5pNNiyDaka3mEpdcElpYpVXO3TDxkcRgn9387d1105",
               "type": "string"
             }
           ]
         },
-        "method": "PATCH",
+        "method": "GET",
         "header": [
           {
             "key": "Accept",
@@ -939,7 +942,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/api/customer-profile/bookings/6/paid",
+          "raw": "http://127.0.0.1:8000/api/customer-profile/bookings/7/pay",
           "protocol": "http",
           "host": [
             "127",
@@ -952,8 +955,8 @@
             "api",
             "customer-profile",
             "bookings",
-            "6",
-            "paid"
+            "7",
+            "pay"
           ]
         }
       },
