@@ -79,7 +79,12 @@ POST /api/stripe/webhook (internal use)
 
 ### Admin
 
-### Provider Approve
-POST /admin/provider/{id}/approve
+### Admin Endpoints
+GET    /api/admin/providers/pending  
+PATCH  /api/admin/providers/{id}/approve  
+PATCH  /api/admin/providers/{id}/reject  
+GET    /api/admin/bookings  
+GET    /api/admin/payments  
+GET    /api/admin/dashboard-stats   
 
 

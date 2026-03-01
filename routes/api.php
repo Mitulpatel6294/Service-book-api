@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AdminProviderController;
+use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CustomerProfileController;
 use App\Http\Controllers\Api\PaymentController;
@@ -58,9 +58,20 @@ Route::middleware(['auth:sanctum', 'role:customer'])
     });
 
 
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::patch('/admin/provider/{id}/approve', [AdminProviderController::class, 'approve']);
-});
+Route::middleware(['auth:sanctum', 'role:admin'])
+    ->prefix('admin')
+    ->group(function () {
+
+        Route::get('/providers/pending', [AdminController::class, 'pendingProviders']);
+        Route::patch('/providers/{id}/approve', [AdminController::class, 'approve']);
+        Route::patch('/providers/{id}/reject', [AdminController::class, 'reject']);
+
+        Route::get('/bookings', [AdminController::class, 'bookings']);
+        Route::get('/payments', [AdminController::class, 'payments']);
+
+        Route::get('/dashboard-stats', [AdminController::class, 'stats']);
+    });
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
