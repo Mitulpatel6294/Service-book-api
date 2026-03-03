@@ -47,7 +47,7 @@ class StripeWebhookController extends Controller
             }
             $booking->update([
                 'payment_status' => 'paid',
-                'status' => 'confirmed'
+                'status' => 'completed'
             ]);
             Payment::create([
                 'booking_id' => $booking->id,

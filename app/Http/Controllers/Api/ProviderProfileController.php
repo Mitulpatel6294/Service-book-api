@@ -27,4 +27,11 @@ class ProviderProfileController extends Controller
     {
         return response()->json($service->show(auth()->id()));
     }
+
+    public function show_profile($id, ProviderProfileService $service)
+    {
+        return response()->json(
+            $service->getProviderDetails($id)
+        );
+    }
 }

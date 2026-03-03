@@ -20,7 +20,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle']);
-
 Route::get('/services', [ServiceController::class, 'index']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
@@ -65,14 +64,13 @@ Route::middleware(['auth:sanctum', 'role:admin'])
         Route::get('/providers/pending', [AdminController::class, 'pendingProviders']);
         Route::patch('/providers/{id}/approve', [AdminController::class, 'approve']);
         Route::patch('/providers/{id}/reject', [AdminController::class, 'reject']);
-
         Route::get('/bookings', [AdminController::class, 'bookings']);
         Route::get('/payments', [AdminController::class, 'payments']);
-
         Route::get('/dashboard-stats', [AdminController::class, 'stats']);
     });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/provider-profile/{id}', [ProviderProfileController::class, 'show_profile']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 

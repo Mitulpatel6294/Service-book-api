@@ -16,26 +16,26 @@ Quotation based service booking API with OTP authentication and role based workf
 - Async payment verification
 
 ## Tech Stack
-Laravel<br>
-Sanctum<br>
-MySQL<br>
+Laravel   
+Sanctum   
+MySQL   
 
 ## Authentication Flow
-Register → OTP verify → Set password → Login<br>
+Register → OTP verify → Set password → Login   
 
 ## Authorization
-Protected routes require Bearer token via Sanctum.<br>
+Protected routes require Bearer token via Sanctum.   
 
 ## Setup
-composer install<br>
-copy .env<br>
-php artisan key:generate<br>
-php artisan migrate<br>
+composer install  
+copy .env  
+php artisan key:generate  
+php artisan migrate  
 
 ### payment setup
-STRIPE_KEY=pk_test_...<br>
-STRIPE_SECRET=sk_test_...<br>
-STRIPE_WEBHOOK_SECRET=whsec_...<br>
+STRIPE_KEY=pk_test_...   
+STRIPE_SECRET=sk_test_...  
+STRIPE_WEBHOOK_SECRET=whsec_...  
 
 ## API Endpoints
 
@@ -46,9 +46,7 @@ POST /api/set-password
 POST /api/login  
 POST /api/logout (protected)
 
-### Profile Endpoints
-
-### Customer
+### Customer Profile Endpoints   
 POST /customer-profile  
 PATCH /customer-profile  
 GET /customer-profile 
@@ -56,15 +54,17 @@ GET /customer-profile
 ### Bookings Endpoints for Customer
 POST /customer-profile/bookings  
 PATCH /customer-profile/bookings/{id}/accept  
-PATCH /customer-profile/bookings/{id}/reject 
+PATCH /customer-profile/bookings/{id}/reject  
 
-### Provider
+### Provider Profile Endpoints
 POST /provider-profile  
 PATCH /provider-profile  
 GET /provider-profile
 
-### Bookings Endpoints for Provider
+### Provider Profile Details For Users
+GET /provider-profile/{id}
 
+### Bookings Endpoints for Provider
 PATCH /provider-profile/bookings/{id}/quote
 
 ### Service 

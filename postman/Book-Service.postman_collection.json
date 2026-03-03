@@ -769,7 +769,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "12|WAOBNe6ifWhxE7zrAtX5w6YcQmJj6k9lmDbKsdgC942f9941",
+              "value": "20|wrzfnP6iEVd0ONRxwt1QxT16IjWX8OjKi29xovcD9885b904",
               "type": "string"
             }
           ]
@@ -804,6 +804,58 @@
           "path": [
             "api",
             "services"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "user-see-provider-profile",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "20|wrzfnP6iEVd0ONRxwt1QxT16IjWX8OjKi29xovcD9885b904",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/provider-profile/2",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "provider-profile",
+            "2"
           ]
         }
       },
