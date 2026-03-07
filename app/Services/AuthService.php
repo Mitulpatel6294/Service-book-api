@@ -24,7 +24,12 @@ class AuthService
             'otp_hash' => Hash::make($otp),
             'otp_expires_at' => now()->addMinutes(10)
         ]);
-        Mail::to($user->email)->send(new OtpMail($otp));
+        // Mail::to($user->email)->send(new OtpMail($otp));
+        $brevo = new BrevoMailService();
+
+        $html = view('emails.otp', ['otp' => $otp])->render();
+
+        $brevo->send($user->email, 'OTP Verification', $html);
 
         return $user;
     }
@@ -32,7 +37,7 @@ class AuthService
     {
         $user = User::where('email', $data['email'])->first();
 
-        if (!$user) {   
+        if (!$user) {
             throw ValidationException::withMessages(['email' => 'User not found']);
         }
 
@@ -70,7 +75,7 @@ class AuthService
 
         return true;
     }
-    
+
     public function login(array $data)
     {
         $user = User::where('email', $data['email'])->first();
