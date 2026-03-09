@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\BookingConfirmedMail;
 use App\Models\Booking;
 use App\Models\Payment;
+use App\services\BrevoMailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
@@ -37,7 +38,7 @@ class StripeWebhookController extends Controller
             $bookingId = $session->metadata->booking_id ?? null;
 
 
-            if (!$bookingId) {  
+            if (!$bookingId) {
                 return response()->json(['error' => 'Missing booking id'], 400);
             }
             $booking = Booking::find(id: $bookingId);
@@ -56,8 +57,18 @@ class StripeWebhookController extends Controller
                 'status' => 'paid',
                 'paid_at' => now()
             ]);
-            Mail::to($booking->customer->email)->send(new BookingConfirmedMail($booking));
-            Mail::to($booking->provider->email)->send(new BookingConfirmedMail($booking));
+            $brevo = new BrevoMailService();
+            $html = view('emails.bookingconfirm', ['booking' => $booking])->render();
+            $brevo->send(
+                $booking->provider->email,
+                'Booking confirmed with payment',
+                $html
+            );
+            $brevo->send(
+                $booking->customer->email,
+                'Booking confirmed with payment',
+                $html
+            );
         }
         if ($event->type === 'payment_intent.payment_failed') {
 

@@ -47,7 +47,13 @@ class BookingServices
             'payment_status' => 'unpaid'
         ]);
         $booking->load('provider', 'service', 'customer');
-        Mail::to($booking->provider->email)->send(new BookingCreatedMail($booking));
+        $brevo = new BrevoMailService();
+        $html = view('emails.bookingcreated', ['booking' => $booking])->render();
+        $brevo->send(
+            $booking->provider->email,
+            'New booking request received',
+            $html
+        );
 
         return $booking;
     }
@@ -63,7 +69,14 @@ class BookingServices
             'quote_status' => 'sent',
             'status' => 'quoted'
         ]);
-        Mail::to($booking->customer->email)->send(new QuoteSentMail($booking));
+        $brevo = new BrevoMailService();
+        $html = view('emails.quotesend', ['booking' => $booking])->render();
+        $brevo->send(
+            $booking->customer->email,
+            'Service quotation sent',
+            $html
+        );
+
         return $booking;
     }
 
@@ -77,8 +90,13 @@ class BookingServices
             'quote_status' => 'accepted',
             'status' => 'accepted'
         ]);
-
-        Mail::to($booking->provider->email)->send(new QuoteAcceptedMail($booking));
+        $brevo = new BrevoMailService();
+        $html = view('emails.quoteaccept', ['booking' => $booking])->render();
+        $brevo->send(
+            $booking->provider->email,
+            'Service quotation Accepted',
+            $html
+        );
         return $booking;
     }
 
@@ -92,7 +110,13 @@ class BookingServices
             'quote_status' => 'rejected',
             'status' => 'cancelled'
         ]);
-        Mail::to($booking->provider->email)->send(new BookingCancelledMail($booking));
+        $brevo = new BrevoMailService();
+        $html = view('emails.bookingcancel', ['booking' => $booking])->render();
+        $brevo->send(
+            $booking->provider->email,
+            'Booking has been cancelled',
+            $html
+        );
         return $booking;
     }
 
