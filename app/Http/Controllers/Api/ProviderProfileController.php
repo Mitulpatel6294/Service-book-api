@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProviderProfileRequest;
-use App\services\ProviderProfileService;
+use App\Services\ProviderProfileService;
 use Illuminate\Http\Request;
 
 class ProviderProfileController extends Controller

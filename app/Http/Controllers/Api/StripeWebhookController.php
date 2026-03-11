@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\BookingConfirmedMail;
 use App\Models\Booking;
 use App\Models\Payment;
-use App\services\BrevoMailService;
+use App\Services\BrevoMailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
