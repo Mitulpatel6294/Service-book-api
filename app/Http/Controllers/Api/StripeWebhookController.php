@@ -26,7 +26,7 @@ class StripeWebhookController extends Controller
             $event = Webhook::constructEvent(
                 $payload,
                 $signature,
-                env('STRIPE_WEBHOOK_SECRET')
+                config('services.stripe.webhook')
             );
         } catch (\Exception $e) {
             return response()->json(['error' => 'Invalid webhook'], 400);
@@ -41,7 +41,7 @@ class StripeWebhookController extends Controller
             if (!$bookingId) {
                 return response()->json(['error' => 'Missing booking id'], 400);
             }
-            $booking = Booking::find(id: $bookingId);
+            $booking = Booking::find($bookingId);
 
             if (!$booking || $booking->payment_status === 'paid') {
                 return response()->json(['already paid' => true]);

@@ -45,8 +45,8 @@ class StripePaymentService
                     'quantity' => 1,
                 ]
             ],
-            'success_url' => config('app.url') . '/payment-success?booking_id=' . $booking->id,
-            'cancel_url' => config('app.url') . '/payment-cancel?booking_id=' . $booking->id,
+            'success_url' => config('app.url') . 'payment-success?booking_id=' . $booking->id,
+            'cancel_url' => config('app.url') . 'payment-cancel?booking_id=' . $booking->id,
         ]);
 
         return $session->url;
