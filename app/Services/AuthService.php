@@ -17,13 +17,29 @@ class AuthService
     public function register(array $data)
     {
         $otp = random_int(100000, 999999);
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'role' => $data['role'] ?? 'customer',
-            'otp_hash' => Hash::make($otp),
-            'otp_expires_at' => now()->addMinutes(10)
-        ]);
+        $user = User::where('email', $data['email'])->first();
+        if ($user && $user->email_verified_at) {
+            throw ValidationException::withMessages([
+                'email' => 'email already exist'
+            ]);
+        }
+        if ($user) {
+            $user->update([
+                'name' => $data['name'],
+                'role' => $data['role'] ?? 'customer',
+                'otp_hash' => Hash::make($otp),
+                'otp_expires_at' => now()->addMinutes(10)
+            ]);
+        } else {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'role' => $data['role'] ?? 'customer',
+                'otp_hash' => Hash::make($otp),
+                'otp_expires_at' => now()->addMinutes(10)
+            ]);
+        }
+
         $brevo = new BrevoMailService();
 
         $html = view('emails.otp', ['otp' => $otp])->render();
