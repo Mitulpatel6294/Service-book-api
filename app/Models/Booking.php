@@ -18,7 +18,8 @@ class Booking extends Model
         'image',
         'quoted_price',
         'quoted_duration',
-        'quote_status'
+        'quote_status',
+        'expires_at'
     ];
 
     public function customer()

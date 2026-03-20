@@ -43,8 +43,10 @@ class BookingServices
             'booking_date' => $data['booking_date'],
             'booking_time' => $data['booking_time'],
             'notes' => $data['notes'] ?? null,
+            'image' => $data['image'] ?? null,
             'status' => 'pending',
-            'payment_status' => 'unpaid'
+            'payment_status' => 'unpaid',
+            'expires_at' => now()->addHours(24)
         ]);
         $booking->load('provider', 'service', 'customer');
         $brevo = new BrevoMailService();
@@ -63,11 +65,17 @@ class BookingServices
             ->where('provider_id', $providerId)
             ->firstOrFail();
 
+        if ($booking->status === 'expired') {
+            throw ValidationException::withMessages([
+                'booking' => 'Booking expired'
+            ]);
+        }
         $booking->update([
             'quoted_price' => $data['quoted_price'],
             'quoted_duration' => $data['quoted_duration'],
             'quote_status' => 'sent',
-            'status' => 'quoted'
+            'status' => 'quoted',
+            'expires_at' => now()->addHours(12)
         ]);
         $brevo = new BrevoMailService();
         $html = view('emails.quotesend', ['booking' => $booking])->render();
@@ -86,9 +94,22 @@ class BookingServices
             ->where('customer_id', $userId)
             ->firstOrFail();
 
+        if ($booking->status === 'expired') {
+            throw ValidationException::withMessages([
+                'booking' => 'Booking expired'
+            ]);
+        }
+
+        if ($booking->status !== 'pending') {
+            throw ValidationException::withMessages([
+                'booking' => 'Invalid action'
+            ]);
+        }
+
         $booking->update([
             'quote_status' => 'accepted',
-            'status' => 'accepted'
+            'status' => 'accepted',
+            'expires_at' => now()->addHours(3)
         ]);
         $brevo = new BrevoMailService();
         $html = view('emails.quoteaccept', ['booking' => $booking])->render();
@@ -102,14 +123,29 @@ class BookingServices
 
     public function rejectQuote($bookingId, $userId)
     {
+
         $booking = Booking::where('id', $bookingId)
             ->where('customer_id', $userId)
             ->firstOrFail();
 
+        if ($booking->status === 'expired') {
+            throw ValidationException::withMessages([
+                'booking' => 'Booking expired'
+            ]);
+        }
+
+        if ($booking->status !== 'pending') {
+            throw ValidationException::withMessages([
+                'booking' => 'Invalid action'
+            ]);
+        }
+
         $booking->update([
             'quote_status' => 'rejected',
-            'status' => 'cancelled'
+            'status' => 'cancelled',
+            'expires_at' => null
         ]);
+        
         $brevo = new BrevoMailService();
         $html = view('emails.bookingcancel', ['booking' => $booking])->render();
         $brevo->send(
