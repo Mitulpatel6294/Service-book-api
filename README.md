@@ -37,6 +37,14 @@ STRIPE_KEY=pk_test_...
 STRIPE_SECRET=sk_test_...  
 STRIPE_WEBHOOK_SECRET=whsec_...  
 
+### Diagrams
+
+## System Architecture
+![Architecture](./images/system.png)
+
+## API Flow
+![API Flow](./images/API.png)
+
 ## API Endpoints
 
 ### Auth
